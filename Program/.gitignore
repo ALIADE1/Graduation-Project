@@ -1,0 +1,38 @@
+# Ignore environment file with secrets
+.env
+
+# Ignore Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Ignore virtual environments
+venv/
+env/
+ENV/
+
+# Ignore temporary files
+temp/*
+!temp/.gitkeep
+
+# Ignore output files
+outputs/*
+!outputs/.gitkeep
+
+# Ignore logs
+*.log
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Ignore downloaded models (Whisper caches)
+~/.cache/whisper/

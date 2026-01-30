@@ -1,0 +1,47 @@
+# General
+.DS_Store
+Thumbs.db
+*.log
+pass.txt
+
+# Environment variables
+.env
+Program/.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+Program/temp/*
+!Program/temp/.gitkeep
+Program/outputs/*
+!Program/outputs/.gitkeep
+Program/venv/
+Program/env/
+Program/ENV/
+Program/ffmpeg.exe
+Program/ffprobe.exe
+
+# Flutter/Dart
+.dart_tool/
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+app/build/
+app/.dart_tool/
+app/.flutter-plugins-dependencies
+app/.pub-cache/
+app/.pub/
+app/android/app/debug
+app/android/app/profile
+app/android/app/release
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+app/*.iml
