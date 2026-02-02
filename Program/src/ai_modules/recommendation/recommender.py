@@ -1,6 +1,6 @@
 import asyncio
 from typing import List, Dict, Optional
-import google.generativeai as genai
+from google import genai
 from googleapiclient.discovery import build
 from sqlmodel import select
 from sqlmodel.ext.asyncio.session import AsyncSession
@@ -20,7 +20,8 @@ class RecommendationService:
 
     def __init__(self, api_key: Optional[str] = None):
         self.api_key = api_key or settings.google_api_key
-        genai.configure(api_key=self.api_key)
+        # Use the newer google-genai client
+        self.client = genai.Client(api_key=self.api_key)
         self.youtube = build("youtube", "v3", developerKey=self.api_key)
 
     async def get_recommendations_for_user(
@@ -64,7 +65,14 @@ class RecommendationService:
     ) -> List[Dict]:
         """
         Search YouTube for new videos based on a query.
+        Prioritizes educational content.
         """
+        if not query:
+            return []
+
+        # Enhance query for better educational results
+        enhanced_query = f"{query} educational lecture tutorial"
+
         try:
             # Run in thread pool since google-api-python-client is synchronous
             loop = asyncio.get_event_loop()
@@ -72,22 +80,26 @@ class RecommendationService:
                 None,
                 lambda: self.youtube.search()
                 .list(
-                    q=query,
+                    q=enhanced_query,
                     part="snippet",
                     maxResults=limit,
                     type="video",
                     relevanceLanguage="en",
+                    videoEmbeddable="true",
                 )
                 .execute(),
             )
 
             videos = []
             for item in search_response.get("items", []):
+                snippet = item["snippet"]
                 videos.append(
                     {
                         "id": item["id"]["videoId"],
-                        "title": item["snippet"]["title"],
-                        "thumbnail": item["snippet"]["thumbnails"]["medium"]["url"],
+                        "title": snippet["title"],
+                        "description": snippet["description"],
+                        "thumbnail": snippet["thumbnails"]["medium"]["url"],
+                        "channelTitle": snippet["channelTitle"],
                         "url": f"https://www.youtube.com/watch?v={item['id']['videoId']}",
                         "type": "youtube_video",
                     }

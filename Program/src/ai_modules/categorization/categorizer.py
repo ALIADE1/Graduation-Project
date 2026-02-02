@@ -1,4 +1,4 @@
-import google.generativeai as genai
+from google import genai
 from typing import Optional
 from src.utils.logger import setup_logger
 from src.utils.config import settings
@@ -13,8 +13,9 @@ class CategorizationService:
 
     def __init__(self, api_key: Optional[str] = None):
         self.api_key = api_key or settings.google_api_key
-        genai.configure(api_key=self.api_key)
-        self.model = genai.GenerativeModel("gemini-1.5-flash")
+        # Use the newer google-genai client
+        self.client = genai.Client(api_key=self.api_key)
+        self.model_id = "gemini-1.5-flash"
 
     async def categorize_text(self, text: str) -> str:
         """
@@ -31,7 +32,11 @@ class CategorizationService:
         )
 
         try:
-            response = await self.model.generate_content_async(prompt)
+            # Using the newer google-genai syntax
+            response = self.client.models.generate_content(
+                model=self.model_id, contents=prompt
+            )
+
             category = response.text.strip().replace(".", "").title()
             # Basic validation/cleanup
             if len(category) > 30:

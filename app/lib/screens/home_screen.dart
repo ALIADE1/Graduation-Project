@@ -549,8 +549,21 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         margin: const EdgeInsets.only(bottom: 16),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: AppTheme.cardShadow,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: categoryColor.withOpacity(0.08),
+              blurRadius: 15,
+              offset: const Offset(0, 8),
+              spreadRadius: 0,
+            ),
+            BoxShadow(
+              color: Colors.black.withOpacity(0.03),
+              blurRadius: 5,
+              offset: const Offset(0, 2),
+              spreadRadius: 0,
+            ),
+          ],
         ),
         child: Material(
           color: Colors.transparent,
@@ -567,26 +580,37 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 ),
               );
             },
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(20),
             child: Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(18),
               child: Row(
                 children: [
-                  // Category Icon
+                  // Category Icon with Gradient
                   Container(
-                    width: 56,
-                    height: 56,
+                    width: 64,
+                    height: 64,
                     decoration: BoxDecoration(
-                      color: categoryColor.withOpacity(0.12),
-                      borderRadius: BorderRadius.circular(14),
+                      gradient: LinearGradient(
+                        colors: [
+                          categoryColor.withOpacity(0.15),
+                          categoryColor.withOpacity(0.05),
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.circular(18),
+                      border: Border.all(
+                        color: categoryColor.withOpacity(0.1),
+                        width: 1,
+                      ),
                     ),
                     child: Icon(
                       categoryIcon,
                       color: categoryColor,
-                      size: 28,
+                      size: 30,
                     ),
                   ),
-                  const SizedBox(width: 16),
+                  const SizedBox(width: 18),
                   
                   // Note Details
                   Expanded(
@@ -595,38 +619,49 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       children: [
                         Text(
                           note['video_title'] ?? 'Untitled',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 15,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
                             color: AppTheme.textPrimary,
+                            letterSpacing: -0.2,
                           ),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: 10),
                         Row(
                           children: [
                             Container(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 10,
-                                vertical: 4,
+                                vertical: 5,
                               ),
                               decoration: BoxDecoration(
-                                color: categoryColor.withOpacity(0.12),
-                                borderRadius: BorderRadius.circular(6),
+                                color: categoryColor.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(8),
                               ),
-                              child: Text(
-                                category,
-                                style: TextStyle(
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.w600,
-                                  color: categoryColor,
-                                ),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    categoryIcon,
+                                    size: 12,
+                                    color: categoryColor,
+                                  ),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    category,
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.bold,
+                                      color: categoryColor,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            const SizedBox(width: 8),
+                            const SizedBox(width: 12),
                             Icon(
-                              Icons.access_time_rounded,
+                              Icons.history_rounded,
                               size: 14,
                               color: AppTheme.textLight,
                             ),
@@ -635,6 +670,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                               _formatDate(note['created_at']),
                               style: TextStyle(
                                 fontSize: 12,
+                                fontWeight: FontWeight.w500,
                                 color: AppTheme.textLight,
                               ),
                             ),
@@ -644,17 +680,18 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     ),
                   ),
                   
-                  // Arrow
+                  // Arrow button
                   Container(
-                    padding: const EdgeInsets.all(8),
+                    width: 32,
+                    height: 32,
                     decoration: BoxDecoration(
-                      color: AppTheme.surfaceColor,
-                      borderRadius: BorderRadius.circular(8),
+                      color: Colors.grey.shade50,
+                      shape: BoxShape.circle,
                     ),
-                    child: const Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      size: 14,
-                      color: AppTheme.textSecondary,
+                    child: Icon(
+                      Icons.chevron_right_rounded,
+                      size: 20,
+                      color: AppTheme.textSecondary.withOpacity(0.5),
                     ),
                   ),
                 ],

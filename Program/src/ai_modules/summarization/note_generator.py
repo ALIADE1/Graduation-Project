@@ -5,7 +5,7 @@ from pydantic import ValidationError
 
 from src.utils.logger import setup_logger
 from src.utils.config import settings
-from src.summarization.schemas import StudyNoteSchema
+from src.ai_modules.summarization.schemas import StudyNoteSchema
 
 logger = setup_logger(__name__)
 
