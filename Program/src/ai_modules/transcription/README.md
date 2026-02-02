@@ -1,55 +1,55 @@
 # Transcription Module 🎤
 
-## المسؤول عن هذا الجزء
-هذا الجزء خاص بـ **تحويل الفيديوهات لنصوص** (Speech-to-Text).
+## Responsibility
+This module handles **Speech-to-Text conversion** from YouTube videos.
 
-## الوظيفة
-1. تحميل الصوت من فيديوهات اليوتيوب.
-2. تحويل الملفات الصوتية لنصوص مكتوبة باستخدام **OpenAI Whisper**.
+## Functionality
+1. Download audio from YouTube videos.
+2. Convert audio files to text using **OpenAI Whisper**.
 
-## الملفات الموجودة
+## Files
 
 ### 1. `audio_downloader.py`
-- **المهمة:** تحميل الصوت من اليوتيوب باستخدام `yt-dlp`.
-- **الكلاس الرئيسي:** `YouTubeDownloader`
-- **الدالة المهمة:** `download_audio(url)` - بتنزل الصوت وترجع مسار الملف.
+- **Purpose:** Download audio from YouTube using `yt-dlp`.
+- **Main Class:** `YouTubeDownloader`
+- **Key Method:** `download_audio(url)` - Downloads audio and returns file path.
 
 ### 2. `whisper_transcriber.py`
-- **المهمة:** تحويل الصوت لنص باستخدام Whisper.
-- **الكلاس الرئيسي:** `WhisperTranscriber`
-- **الدالة المهمة:** `transcribe(audio_path)` - بترجع النص الكامل + Timestamps.
+- **Purpose:** Convert audio to text using Whisper.
+- **Main Class:** `WhisperTranscriber`
+- **Key Method:** `transcribe(audio_path)` - Returns full text + timestamps.
 
 ### 3. `audio_processor.py`
-- **المهمة:** التحقق من جودة الملفات الصوتية ومعالجتها.
-- **الدوال المهمة:**
-  - `validate_audio_file()` - للتأكد من سلامة الملف.
-  - `get_audio_duration()` - لحساب مدة الفيديو.
+- **Purpose:** Validate and process audio files.
+- **Key Methods:**
+  - `validate_audio_file()` - Verify file integrity.
+  - `get_audio_duration()` - Calculate video duration.
 
-## التطويرات المقترحة
-- [ ] إضافة دعم للغات متعددة (عربي، فرنسي، إسباني).
-- [ ] تحسين سرعة التحميل باستخدام Multi-threading.
-- [ ] إضافة Cache للملفات الصوتية لتجنب إعادة التحميل.
+## Proposed Enhancements
+- [ ] Add support for multiple languages (Arabic, French, Spanish).
+- [ ] Improve download speed using multi-threading.
+- [ ] Add caching for audio files to avoid re-downloading.
 
-## الاختبار
+## Testing
 ```python
 from src.ai_modules.transcription.audio_downloader import YouTubeDownloader
 from src.ai_modules.transcription.whisper_transcriber import WhisperTranscriber
 
-# تحميل الصوت
+# Download audio
 downloader = YouTubeDownloader()
 audio_path = downloader.download_audio("https://www.youtube.com/watch?v=...")
 
-# تحويل لنص
+# Transcribe to text
 transcriber = WhisperTranscriber()
 result = transcriber.transcribe(audio_path)
 print(result['text'])
 ```
 
-## المكتبات المستخدمة
-- `yt-dlp` - تحميل الفيديوهات من اليوتيوب.
-- `openai-whisper` - تحويل الصوت لنص.
-- `torch` - للاستفادة من GPU في التحويل.
+## Libraries Used
+- `yt-dlp` - Download videos from YouTube.
+- `openai-whisper` - Convert audio to text.
+- `torch` - Leverage GPU for transcription.
 
-## ملاحظات مهمة
-- الموديل الافتراضي هو `base` لكن يمكن تغييره لـ `medium` أو `large` لدقة أعلى.
-- استخدام GPU يسرع العملية بشكل كبير (إذا كان متاح على الجهاز).
+## Important Notes
+- Default model is `base` but can be changed to `medium` or `large` for higher accuracy.
+- Using GPU significantly speeds up the process (if available on the machine).

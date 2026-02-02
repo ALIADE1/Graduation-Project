@@ -1,64 +1,64 @@
 # Categorization Module 🏷️
 
-## المسؤول عن هذا الجزء
-هذا الجزء خاص بـ **التصنيف التلقائي للملاحظات**.
+## Responsibility
+This module handles **automatic categorization of notes**.
 
-## الوظيفة
-1. استقبال نص الملخص (Summary).
-2. استخدام **Google Gemini** لتحليل المحتوى.
-3. إرجاع تصنيف واحد (مثل: Programming, Medicine, History).
+## Functionality
+1. Receive summary text.
+2. Use **Google Gemini** to analyze content.
+3. Return a single category (e.g., Programming, Medicine, History).
 
-## الملفات الموجودة
+## Files
 
 ### 1. `categorizer.py`
-- **المهمة:** تصنيف النصوص باستخدام AI.
-- **الكلاس الرئيسي:** `CategorizationService`
-- **الدالة المهمة:** `categorize_text(text)` - بترجع اسم الـ Category.
+- **Purpose:** Categorize text using AI.
+- **Main Class:** `CategorizationService`
+- **Key Method:** `categorize_text(text)` - Returns category name.
 
-## آلية العمل
-1. **استقبال النص:** ناخد أول 2000 حرف من الملخص.
-2. **إرسال Prompt:** نطلب من Gemini يحدد Category واحد أو كلمتين.
-3. **تنظيف النتيجة:** نحذف النقاط ونخلي أول حرف Capital.
-4. **التحقق:** لو النتيجة طويلة جداً (>30 حرف) نقصرها.
+## How It Works
+1. **Receive Text:** Take first 2000 characters from summary.
+2. **Send Prompt:** Ask Gemini to determine one or two-word category.
+3. **Clean Result:** Remove periods and capitalize first letter.
+4. **Validate:** If result is too long (>30 chars), truncate it.
 
-## أمثلة على الـ Categories
-- **Programming** - دروس برمجة وكود.
-- **Medicine** - طب وصحة.
-- **Business** - إدارة أعمال وريادة.
-- **Science** - فيزياء، كيمياء، أحياء.
-- **History** - تاريخ وحضارات.
-- **Personal Development** - تطوير الذات.
-- **Uncategorized** - إذا فشل التصنيف.
+## Category Examples
+- **Programming** - Coding and development tutorials.
+- **Medicine** - Health and medical content.
+- **Business** - Business management and entrepreneurship.
+- **Science** - Physics, chemistry, biology.
+- **History** - Historical events and civilizations.
+- **Personal Development** - Self-improvement content.
+- **Uncategorized** - If categorization fails.
 
-## التطويرات المقترحة
-- [ ] إضافة قائمة محددة من الـ Categories المسموحة.
-- [ ] استخدام Embeddings لتحسين دقة التصنيف.
-- [ ] إضافة دعم للتصنيفات الفرعية (Sub-categories).
-- [ ] تخزين نتائج التصنيف في Database للتحليل المستقبلي.
+## Proposed Enhancements
+- [ ] Add predefined list of allowed categories.
+- [ ] Use embeddings to improve categorization accuracy.
+- [ ] Add support for sub-categories.
+- [ ] Store categorization results in database for future analysis.
 
-## الاختبار
+## Testing
 ```python
 from src.ai_modules.categorization.categorizer import CategorizationService
 
 categorizer = CategorizationService()
 
-# تصنيف نص
+# Categorize text
 text = "This video explains how to build a REST API using FastAPI and Python..."
 category = await categorizer.categorize_text(text)
 
 print(f"Category: {category}")  # Output: Programming
 ```
 
-## المكتبات المستخدمة
-- `google-genai` - للتواصل مع Google Gemini.
+## Libraries Used
+- `google-genai` - Communicate with Google Gemini.
 
-## ملاحظات مهمة
-- الموديل المستخدم حالياً هو `gemini-1.5-flash`.
-- إذا كان النص قصير جداً (<10 أحرف) يرجع "Uncategorized".
-- يمكن تحسين الدقة بإضافة أمثلة في الـ Prompt.
+## Important Notes
+- Currently using `gemini-1.5-flash` model.
+- If text is too short (<10 chars), returns "Uncategorized".
+- Accuracy can be improved by adding examples in the prompt.
 
-## تحسين الـ Prompt
-لتحسين دقة التصنيف، يمكنك تعديل الـ Prompt في الملف:
+## Improving the Prompt
+To improve categorization accuracy, you can modify the prompt in the file:
 ```python
 prompt = (
     "Analyze the following text and categorize it into ONE of these categories: "

@@ -1,44 +1,44 @@
 # Recommendation Module 🎯
 
-## المسؤول عن هذا الجزء
-هذا الجزء خاص بـ **اقتراح فيديوهات تعليمية جديدة** بناءً على اهتمامات المستخدم.
+## Responsibility
+This module handles **suggesting new educational videos** based on user interests.
 
-## الوظيفة
-1. تحليل الملاحظات المحفوظة للمستخدم.
-2. استخراج المواضيع والـ Categories.
-3. البحث في **YouTube** عن فيديوهات ذات صلة.
-4. إرجاع قائمة بالفيديوهات التعليمية المقترحة.
+## Functionality
+1. Analyze user's saved notes.
+2. Extract topics and categories.
+3. Search **YouTube** for related videos.
+4. Return a list of suggested educational videos.
 
-## الملفات الموجودة
+## Files
 
 ### 1. `recommender.py`
-- **المهمة:** اقتراح فيديوهات تعليمية من اليوتيوب.
-- **الكلاس الرئيسي:** `RecommendationService`
-- **الدوال المهمة:**
-  - `get_recommendations_for_user(user_id)` - يجيب اقتراحات عامة للمستخدم.
-  - `get_youtube_recommendations(query)` - يبحث في اليوتيوب بناءً على كلمات مفتاحية.
-  - `get_similar_notes(note_id)` - يجيب ملاحظات مشابهة من نفس الـ Category.
+- **Purpose:** Suggest educational videos from YouTube.
+- **Main Class:** `RecommendationService`
+- **Key Methods:**
+  - `get_recommendations_for_user(user_id)` - Get general recommendations for user.
+  - `get_youtube_recommendations(query)` - Search YouTube based on keywords.
+  - `get_similar_notes(note_id)` - Get similar notes from the same category.
 
-## آلية العمل
-1. **جلب الملاحظات:** نقرأ آخر 5 ملاحظات حفظها المستخدم.
-2. **استخراج المواضيع:** نستخدم الـ Categories أو العناوين.
-3. **تحسين البحث:** نضيف كلمات مثل "educational", "tutorial", "lecture" للبحث.
-4. **فلترة النتائج:** نختار فقط الفيديوهات القابلة للتضمين (Embeddable).
+## How It Works
+1. **Fetch Notes:** Read the user's last 5 saved notes.
+2. **Extract Topics:** Use categories or titles.
+3. **Enhance Search:** Add keywords like "educational", "tutorial", "lecture".
+4. **Filter Results:** Select only embeddable videos.
 
-## التطويرات المقترحة
-- [ ] إضافة Cache للاقتراحات لتقليل عدد الطلبات لـ YouTube API.
-- [ ] استخدام Machine Learning لتحسين دقة الاقتراحات.
-- [ ] إضافة فلتر لمدة الفيديو (تجنب الفيديوهات الطويلة جداً).
-- [ ] إعطاء أولوية للقنوات التعليمية المشهورة.
+## Proposed Enhancements
+- [ ] Add caching for recommendations to reduce YouTube API calls.
+- [ ] Use Machine Learning to improve recommendation accuracy.
+- [ ] Add filter for video duration (avoid very long videos).
+- [ ] Prioritize well-known educational channels.
 
-## الاختبار
+## Testing
 ```python
 from src.ai_modules.recommendation.recommender import RecommendationService
 from src.db.database import get_session
 
 recommender = RecommendationService()
 
-# الحصول على اقتراحات للمستخدم
+# Get recommendations for user
 async def test_recommendations():
     async with get_session() as session:
         recs = await recommender.get_recommendations_for_user(session, user_id=1)
@@ -46,19 +46,19 @@ async def test_recommendations():
             print(f"{video['title']} - {video['url']}")
 ```
 
-## المكتبات المستخدمة
-- `google-api-python-client` - للبحث في YouTube.
-- `google-genai` - لتحليل المواضيع (مستقبلاً).
+## Libraries Used
+- `google-api-python-client` - Search YouTube.
+- `google-genai` - Analyze topics (future use).
 
-## ملاحظات مهمة
-- YouTube API له **حد يومي** (Quota)، يجب استخدام Cache لتقليل الطلبات.
-- البحث المحسّن يضيف كلمات "educational lecture tutorial" للحصول على نتائج تعليمية.
-- النظام يعطي الأولوية للفيديوهات من نفس الـ Category.
+## Important Notes
+- YouTube API has a **daily quota limit**, use caching to reduce requests.
+- Enhanced search adds "educational lecture tutorial" keywords for better educational results.
+- System prioritizes videos from the same category.
 
 ## API Quota Management
-يُنصح بتخزين النتائج مؤقتاً (Cache) لتجنب استنفاد الـ YouTube API Quota:
+It's recommended to cache results temporarily to avoid exhausting YouTube API quota:
 ```python
-# مثال على Cache بسيط
+# Simple cache example
 cache = {}
 
 def get_cached_recommendations(query):

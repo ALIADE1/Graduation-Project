@@ -16,7 +16,7 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
   String _status = 'pending';
   String _message = 'Initializing...';
   int _progress = 0;
-  String? _finalNotes; // هنا هنحفظ الملخص لما يخلص
+  String? _finalNotes; // Store the summary when completed
 
   @override
   void initState() {
@@ -26,11 +26,11 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
 
   @override
   void dispose() {
-    _timer?.cancel(); // لازم نوقف التايمر لما نخرج
+    _timer?.cancel(); // Must stop the timer when exiting
     super.dispose();
   }
 
-  // دالة بتشتغل كل 3 ثواني تسأل السيرفر
+  // Function that runs every 3 seconds to poll the server
   void _startPolling() {
     _timer = Timer.periodic(const Duration(seconds: 3), (timer) async {
       final data = await ApiService.getTaskStatus(widget.taskId);
@@ -42,12 +42,12 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
           _progress = data['progress'] ?? 0;
         });
 
-        // لو خلص، وقف التايمر وهات النتيجة
+        // If completed, stop the timer and fetch the result
         if (_status == 'completed') {
           timer.cancel();
           _fetchFinalResult();
         } 
-        // لو فشل، وقف التايمر واعرض خطأ
+        // If failed, stop the timer and show error
         else if (_status == 'failed') {
           timer.cancel();
           ScaffoldMessenger.of(context).showSnackBar(
@@ -58,11 +58,11 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
     });
   }
 
-  // دالة لتحميل النتيجة النهائية (لسه هنظبطها، حالياً بتعرض رسالة نجاح بس)
+  // Function to load the final result (will be refined later, currently shows success message only)
   Future<void> _fetchFinalResult() async {
     // TODO: Call API to get the full markdown text
     setState(() {
-       // ده نص مؤقت لحد ما نربط دالة التحميل الحقيقية
+       // This is temporary text until we connect the actual loading function
       _finalNotes = "✅ Notes Generated Successfully!\n\n(We will display the full text here in the next step)";
     });
   }
@@ -74,13 +74,13 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: _finalNotes != null
-            ? _buildSuccessView() // لو خلص اعرض النتيجة
-            : _buildProgressView(), // لو لسه شغال اعرض التحميل
+            ? _buildSuccessView() // If completed, show result
+            : _buildProgressView(), // If still processing, show loading
       ),
     );
   }
 
-  // تصميم شاشة التحميل
+  // Loading screen design
   Widget _buildProgressView() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -103,7 +103,7 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
     );
   }
 
-  // تصميم شاشة النجاح
+  // Success screen design
   Widget _buildSuccessView() {
     return Center(
       child: Column(
@@ -118,7 +118,7 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
           const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
-              Navigator.pop(context); // ارجع للشاشة الرئيسية
+              Navigator.pop(context); // Return to home screen
             },
             child: const Text("Back to Home"),
           )

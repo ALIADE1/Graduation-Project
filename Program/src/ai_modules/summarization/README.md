@@ -1,67 +1,67 @@
 # Summarization Module 📝
 
-## المسؤول عن هذا الجزء
-هذا الجزء خاص بـ **تلخيص النصوص وتحويلها لملاحظات دراسية**.
+## Responsibility
+This module handles **text summarization and conversion to study notes**.
 
-## الوظيفة
-1. استقبال النص المفرغ من الفيديو.
-2. استخدام **Google Gemini** لتحليل النص وتحويله لملاحظات منظمة.
-3. إنشاء ملف Markdown يحتوي على:
-   - ملخص عام
-   - المفاهيم الأساسية (Key Concepts)
-   - جدول زمني (Timeline)
-   - مهام مطلوبة (Action Items)
+## Functionality
+1. Receive transcribed text from videos.
+2. Use **Google Gemini** to analyze text and convert it to organized notes.
+3. Create a Markdown file containing:
+   - General summary
+   - Key concepts
+   - Timeline
+   - Action items
 
-## الملفات الموجودة
+## Files
 
 ### 1. `note_generator.py`
-- **المهمة:** توليد الملاحظات باستخدام Gemini AI.
-- **الكلاس الرئيسي:** `NoteGenerator`
-- **الدوال المهمة:**
-  - `generate_notes_json(transcript, title)` - يولد JSON منظم.
-  - `format_notes_to_markdown(json_notes)` - يحول JSON لـ Markdown.
+- **Purpose:** Generate notes using Gemini AI.
+- **Main Class:** `NoteGenerator`
+- **Key Methods:**
+  - `generate_notes_json(transcript, title)` - Generates structured JSON.
+  - `format_notes_to_markdown(json_notes)` - Converts JSON to Markdown.
 
 ### 2. `schemas.py`
-- **المهمة:** تعريف هيكل البيانات (Schema) للملاحظات.
-- **الكلاس الرئيسي:** `StudyNoteSchema`
-- **الحقول:**
-  - `summary` - ملخص عام.
-  - `key_concepts` - قائمة بالمفاهيم والتعريفات.
-  - `timestamps` - جدول زمني بالمواضيع.
-  - `action_items` - مهام أو تمارين مقترحة.
+- **Purpose:** Define data structure (Schema) for notes.
+- **Main Class:** `StudyNoteSchema`
+- **Fields:**
+  - `summary` - General summary.
+  - `key_concepts` - List of concepts and definitions.
+  - `timestamps` - Timeline of topics.
+  - `action_items` - Suggested tasks or exercises.
 
 ### 3. `segmenter.py`
-- **المهمة:** تقسيم النصوص الطويلة لأجزاء صغيرة.
-- **الكلاس الرئيسي:** `TranscriptSegmenter`
-- **الدوال المهمة:**
-  - `segment_by_time()` - تقسيم حسب الوقت (كل 5 دقائق مثلاً).
-  - `clean_text()` - إزالة الكلمات الزائدة (um, uh, like).
+- **Purpose:** Split long texts into smaller segments.
+- **Main Class:** `TranscriptSegmenter`
+- **Key Methods:**
+  - `segment_by_time()` - Split by time (e.g., every 5 minutes).
+  - `clean_text()` - Remove filler words (um, uh, like).
 
-## التطويرات المقترحة
-- [ ] إضافة دعم لـ Diagrams والرسوم التوضيحية.
-- [ ] تحسين الـ Prompt لجعل الملخصات أكثر تفصيلاً.
-- [ ] إضافة ميزة الترجمة للعربية.
+## Proposed Enhancements
+- [ ] Add support for diagrams and illustrations.
+- [ ] Improve prompts for more detailed summaries.
+- [ ] Add translation feature to Arabic.
 
-## الاختبار
+## Testing
 ```python
 from src.ai_modules.summarization.note_generator import NoteGenerator
 
 generator = NoteGenerator()
-transcript = "هنا نص الفيديو الكامل..."
+transcript = "Here is the complete video transcript..."
 title = "Introduction to Python"
 
-# توليد الملاحظات
+# Generate notes
 notes_json = generator.generate_notes_json(transcript, title)
 notes_md = generator.format_notes_to_markdown(notes_json)
 
 print(notes_md)
 ```
 
-## المكتبات المستخدمة
-- `google-genai` - التواصل مع Google Gemini.
-- `pydantic` - للتحقق من صحة البيانات.
+## Libraries Used
+- `google-genai` - Communicate with Google Gemini.
+- `pydantic` - Data validation.
 
-## ملاحظات مهمة
-- الموديل المستخدم حالياً هو `gemini-flash-latest`.
-- يمكن تحسين جودة الملخصات بتعديل الـ `SYSTEM_PROMPT`.
-- الـ Schema يضمن أن الناتج يكون بصيغة JSON صحيحة دائماً.
+## Important Notes
+- Currently using `gemini-flash-latest` model.
+- Summary quality can be improved by modifying the `SYSTEM_PROMPT`.
+- The Schema ensures the output is always in valid JSON format.

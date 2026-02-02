@@ -1,56 +1,56 @@
 # AI Modules Overview 🤖
 
-## نظرة عامة على وحدات الذكاء الاصطناعي
+## Overview of AI Modules
 
-هذا المجلد يحتوي على كل الوحدات المتعلقة بالذكاء الاصطناعي في المشروع، مقسمة لـ4 أجزاء رئيسية:
+This directory contains all AI-related modules in the project, divided into 4 main components:
 
-## الوحدات الأربعة
+## The Four Modules
 
-### 1. 🎤 Transcription (التفريغ النصي)
-**المسؤولية:** تحويل فيديوهات اليوتيوب لنصوص مكتوبة.
+### 1. 🎤 Transcription
+**Responsibility:** Convert YouTube videos to written text.
 
-**الملفات:**
-- `audio_downloader.py` - تحميل الصوت من YouTube
-- `whisper_transcriber.py` - تحويل الصوت لنص باستخدام Whisper
-- `audio_processor.py` - معالجة وفحص جودة الملفات الصوتية
+**Files:**
+- `audio_downloader.py` - Download audio from YouTube
+- `whisper_transcriber.py` - Convert audio to text using Whisper
+- `audio_processor.py` - Process and validate audio file quality
 
-**التقنيات:** OpenAI Whisper, yt-dlp, PyTorch
-
----
-
-### 2. 📝 Summarization (التلخيص)
-**المسؤولية:** تحويل النصوص لملاحظات دراسية منظمة.
-
-**الملفات:**
-- `note_generator.py` - توليد الملاحظات باستخدام Gemini
-- `schemas.py` - تعريف هيكل البيانات
-- `segmenter.py` - تقسيم النصوص الطويلة
-
-**التقنيات:** Google Gemini, Pydantic
+**Technologies:** OpenAI Whisper, yt-dlp, PyTorch
 
 ---
 
-### 3. 🎯 Recommendation (الاقتراحات)
-**المسؤولية:** اقتراح فيديوهات تعليمية جديدة للمستخدم.
+### 2. 📝 Summarization
+**Responsibility:** Convert text to organized study notes.
 
-**الملفات:**
-- `recommender.py` - البحث في YouTube وتحليل الاهتمامات
+**Files:**
+- `note_generator.py` - Generate notes using Gemini
+- `schemas.py` - Define data structure
+- `segmenter.py` - Split long texts
 
-**التقنيات:** YouTube Data API v3
-
----
-
-### 4. 🏷️ Categorization (التصنيف)
-**المسؤولية:** تصنيف الملاحظات تلقائياً.
-
-**الملفات:**
-- `categorizer.py` - تصنيف النصوص باستخدام AI
-
-**التقنيات:** Google Gemini
+**Technologies:** Google Gemini, Pydantic
 
 ---
 
-## سير العمل الكامل (Full Pipeline)
+### 3. 🎯 Recommendation
+**Responsibility:** Suggest new educational videos to users.
+
+**Files:**
+- `recommender.py` - Search YouTube and analyze interests
+
+**Technologies:** YouTube Data API v3
+
+---
+
+### 4. 🏷️ Categorization
+**Responsibility:** Automatically categorize notes.
+
+**Files:**
+- `categorizer.py` - Categorize text using AI
+
+**Technologies:** Google Gemini
+
+---
+
+## Complete Workflow (Full Pipeline)
 
 ```mermaid
 graph LR
@@ -62,65 +62,65 @@ graph LR
     F --> G[New Videos]
 ```
 
-1. **المستخدم يدخل رابط YouTube** → وحدة Transcription
-2. **يتم تحميل الصوت وتحويله لنص** → وحدة Summarization
-3. **يتم تلخيص النص وتنظيمه** → وحدة Categorization
-4. **يتم تصنيف الملخص** → Database
-5. **بناءً على الملاحظات المحفوظة** → وحدة Recommendation
-6. **يتم اقتراح فيديوهات جديدة** → المستخدم
+1. **User enters YouTube URL** → Transcription module
+2. **Audio is downloaded and converted to text** → Summarization module
+3. **Text is summarized and organized** → Categorization module
+4. **Summary is categorized** → Database
+5. **Based on saved notes** → Recommendation module
+6. **New videos are suggested** → User
 
 ---
 
-## للفريق: كيف تبدأ؟
+## For Team Members: How to Start?
 
-### إذا كنت مسؤولاً عن Transcription:
-1. افتح مجلد `transcription/`
-2. اقرأ ملف `README.md` الموجود فيه
-3. اختبر الكود باستخدام الأمثلة الموجودة
-4. طور الميزات المقترحة
+### If you're responsible for Transcription:
+1. Open `transcription/` directory
+2. Read the `README.md` file inside
+3. Test the code using the provided examples
+4. Develop the proposed features
 
-### إذا كنت مسؤولاً عن Summarization:
-1. افتح مجلد `summarization/`
-2. اقرأ ملف `README.md`
-3. جرب تعديل الـ Prompts لتحسين جودة الملخصات
-4. أضف ميزات جديدة (مثل الترجمة)
+### If you're responsible for Summarization:
+1. Open `summarization/` directory
+2. Read the `README.md` file
+3. Try modifying the prompts to improve summary quality
+4. Add new features (like translation)
 
-### إذا كنت مسؤولاً عن Recommendation:
-1. افتح مجلد `recommendation/`
-2. اقرأ ملف `README.md`
-3. طور آلية الـ Caching لتوفير الـ API Quota
-4. حسّن دقة الاقتراحات
+### If you're responsible for Recommendation:
+1. Open `recommendation/` directory
+2. Read the `README.md` file
+3. Develop caching mechanism to save API quota
+4. Improve recommendation accuracy
 
-### إذا كنت مسؤولاً عن Categorization:
-1. افتح مجلد `categorization/`
-2. اقرأ ملف `README.md`
-3. أضف قائمة محددة من الـ Categories
-4. حسّن الـ Prompt لزيادة الدقة
+### If you're responsible for Categorization:
+1. Open `categorization/` directory
+2. Read the `README.md` file
+3. Add a predefined list of categories
+4. Improve the prompt to increase accuracy
 
 ---
 
-## ملاحظات عامة
+## General Notes
 
-### المكتبات المشتركة
-جميع الوحدات تستخدم:
-- `src.utils.logger` - للـ Logging
-- `src.utils.config` - لقراءة الإعدادات من `.env`
+### Shared Libraries
+All modules use:
+- `src.utils.logger` - For logging
+- `src.utils.config` - For reading settings from `.env`
 
-### الاختبار
-لاختبار أي وحدة، استخدم:
+### Testing
+To test any module, use:
 ```bash
 cd D:\faculty\Class4\grad\program
 python -m pytest tests/
 ```
 
-### البيئة المطلوبة
-تأكد من تثبيت المكتبات:
+### Required Environment
+Make sure to install the libraries:
 ```bash
 pip install -r requirements.txt
 ```
 
-### المتغيرات البيئية المطلوبة
-في ملف `.env`:
+### Required Environment Variables
+In `.env` file:
 ```
 GOOGLE_API_KEY=your_google_api_key_here
 WHISPER_MODEL_SIZE=base
@@ -129,9 +129,9 @@ DATABASE_URL=your_database_url
 
 ---
 
-## تواصل الفريق
-- إذا واجهتك مشكلة في وحدة معينة، **افتح Issue** على GitHub.
-- إذا أضفت ميزة جديدة، **حدث ملف README** الخاص بالوحدة.
-- قبل الـ Commit، تأكد من أن الكود يعمل بدون أخطاء.
+## Team Communication
+- If you encounter a problem in a specific module, **open an Issue** on GitHub.
+- If you add a new feature, **update the README** file for that module.
+- Before committing, make sure the code runs without errors.
 
-**بالتوفيق للفريق! 🚀**
+**Good luck to the team! 🚀**
