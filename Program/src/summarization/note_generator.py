@@ -1,6 +1,6 @@
 import json
 from typing import Dict, Optional
-from google import genai
+from google import generativeai as genai
 from pydantic import ValidationError
 
 from src.utils.logger import setup_logger
