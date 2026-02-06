@@ -15,7 +15,7 @@ from sqlmodel import Session, select
 from src.db.database import get_session
 from src.db.models import User, Note
 from src.auth.dependencies import get_current_user
-from src.services.categorizer import CategorizationService
+from src.ai_modules.categorization.categorizer import CategorizationService
 from src.utils.logger import setup_logger
 from src.utils.config import settings
 

@@ -3,6 +3,7 @@ pydub==0.25.1
 openai-whisper==20250625
 torch
 torchaudio
+google-genai
 google-generativeai==0.3.2
 langchain==0.1.0
 langchain-google-genai==0.0.5

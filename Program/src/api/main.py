@@ -8,9 +8,9 @@ from fastapi import FastAPI, HTTPException, BackgroundTasks, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, HttpUrl
 
-from src.audio.downloader import YouTubeDownloader
-from src.transcription.whisper_transcriber import WhisperTranscriber
-from src.summarization.note_generator import NoteGenerator
+from src.ai_modules.transcription.audio_downloader import YouTubeDownloader
+from src.ai_modules.transcription.whisper_transcriber import WhisperTranscriber
+from src.ai_modules.summarization.note_generator import NoteGenerator
 from src.utils.logger import setup_logger
 from src.db.database import create_db_and_tables, async_engine
 from src.db.models import Note, User
